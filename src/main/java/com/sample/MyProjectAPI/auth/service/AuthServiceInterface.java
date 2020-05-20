@@ -9,5 +9,14 @@ public interface AuthServiceInterface {
 	 * @return
 	 * @throws Exception
 	 */
-	ApiResponse getAllUsersByEmail() throws Exception;
+	ApiResponse getUserByEmailAndPassword(	String email,
+											String password)
+			throws Exception;
+
+	ApiResponse saveUserDetails(String fname,
+								String lname,
+								String email,
+								String password);
+
+	ApiResponse forgotPassword(String email);
 }
