@@ -73,16 +73,46 @@ public class AuthServiceImpl implements AuthServiceInterface {
 	public	ApiResponse
 			forgotPassword(String email) {
 		ApiResponse resp = null;
-		Users user = new Users();
+
 		Users userByEmail = new Users();
 		userByEmail = userRepo.findByEmail(email);
 		if (null != userByEmail) {
-			String message = "Hello" + userByEmail.getFirstName()
-					+ ", <br> Please click on the link below to reset the password<br> " + "<a>Reset password</a>";
+			String baseUrl = "http://localhost:8080/api/resetPassword?email=";
+			String url = baseUrl + userByEmail.getEmail();
+
+			String link = "<a href=\"" + url + "\" >Reset password</a> ";
+			String message = "Hello " + userByEmail.getFirstName()
+					+ ", <br> Please click on the link below to reset your password.<br> " + link;
 			String status = Mailer.sendMail(userByEmail.getEmail(), "Password Reset", message);
-			return resp = new ApiResponse(true, "A password reset link has been send to this mail.");
+			if (status.equals("success"))
+				resp = new ApiResponse(true, "A password reset link has been sent to this mail.");
+			else
+				resp = new ApiResponse(false, "Failed to send email.");
 		} else {
 			resp = new ApiResponse(false, "User does not exist with this email address.");
+		}
+		return resp;
+	}
+
+	@Override
+	public	ApiResponse
+			updatePassword(	String email,
+							String password) {
+		ApiResponse resp = null;
+		Users userByEmail = new Users();
+		userByEmail = userRepo.findByEmail(email);
+		if (null != userByEmail) {
+			userByEmail.setId(userByEmail.getId());
+			userByEmail.setPassword(password);
+			Users IsSave = userRepo.save(userByEmail);
+			if (null != IsSave) {
+				resp = new ApiResponse(true, "Password updated successfully.");
+			} else {
+				resp = new ApiResponse(false, "Failed to update password.");
+			}
+
+		} else {
+			resp = new ApiResponse(false, "Email does not exist");
 		}
 		return resp;
 	}

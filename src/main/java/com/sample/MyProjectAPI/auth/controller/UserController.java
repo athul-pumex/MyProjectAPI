@@ -65,17 +65,28 @@ public class UserController {
 							@RequestParam(name = "email") String email,
 							@RequestParam(name = "password") String password)
 					throws Exception {
-		ApiResponse resp = authService.saveUserDetails(fname,lname,email,password);
+		ApiResponse resp = authService.saveUserDetails(fname, lname, email, password);
 		return httpResponse.getResponse(resp);
 	}
-	
-	//Forgot password
-		@PostMapping("/forgotPassword")
-		public	ResponseEntity<ApiResponse>
-				forgotPassword(HttpSession session,
-								@RequestParam(name = "email") String email)
-						throws Exception {
-			ApiResponse resp = authService.forgotPassword(email);
-			return httpResponse.getResponse(resp);
-		}
+
+	// Forgot password
+	@PostMapping("/forgotPassword")
+	public	ResponseEntity<ApiResponse>
+			forgotPassword(	HttpSession session,
+							@RequestParam(name = "email") String email)
+					throws Exception {
+		ApiResponse resp = authService.forgotPassword(email);
+		return httpResponse.getResponse(resp);
+	}
+
+	// update password
+	@PostMapping("/updatePassword")
+	public	ResponseEntity<ApiResponse>
+			updatePassword(	HttpSession session,
+							@RequestParam(name = "email") String email,
+							@RequestParam(name = "password") String password)
+					throws Exception {
+		ApiResponse resp = authService.updatePassword(email,password);
+		return httpResponse.getResponse(resp);
+	}
 }

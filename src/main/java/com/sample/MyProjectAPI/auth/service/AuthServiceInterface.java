@@ -19,4 +19,7 @@ public interface AuthServiceInterface {
 								String password);
 
 	ApiResponse forgotPassword(String email);
+
+	ApiResponse updatePassword(	String email,
+								String password);
 }
