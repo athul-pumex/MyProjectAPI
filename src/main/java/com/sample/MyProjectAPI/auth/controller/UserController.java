@@ -46,7 +46,7 @@ public class UserController {
 //		ApiResponse resp = authService.getAllUsersByEmail();
 //		return httpResponse.getResponse(resp);
 //	}
-	@PostMapping("/getUserByEmailAndPassword")
+	@PostMapping("/getUserByEmailAndPasswords")
 	public	ResponseEntity<ApiResponse>
 			getuserByEmailAndPassword(	HttpSession session,
 										@RequestParam(name = "email") String email,
@@ -80,7 +80,7 @@ public class UserController {
 	}
 
 	// update password
-	@PostMapping("/updatePassword")
+	@PostMapping("/resetPassword")
 	public	ResponseEntity<ApiResponse>
 			updatePassword(	HttpSession session,
 							@RequestParam(name = "email") String email,

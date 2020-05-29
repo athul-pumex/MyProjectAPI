@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthServiceInterface {
 		Users userByEmail = new Users();
 		userByEmail = userRepo.findByEmail(email);
 		if (null != userByEmail) {
-			return resp = new ApiResponse(true, "User already exists");
+			return resp = new ApiResponse(false, "User already exists");
 		} else {
 			String id = UUID.randomUUID().toString();
 			System.out.println(id.length());
@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthServiceInterface {
 		Users userByEmail = new Users();
 		userByEmail = userRepo.findByEmail(email);
 		if (null != userByEmail) {
-			String baseUrl = "http://localhost:8080/api/resetPassword?email=";
+			String baseUrl = "http://localhost:3000/updatepassword?email=";
 			String url = baseUrl + userByEmail.getEmail();
 
 			String link = "<a href=\"" + url + "\" >Reset password</a> ";
